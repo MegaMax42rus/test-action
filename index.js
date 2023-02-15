@@ -12,7 +12,7 @@ try {
 
   const sha = github.context.sha;
   const ref = github.context.ref;
-  console.log(`Sha: ${after} Ref: ${ref}`);
+  console.log(`Sha: ${sha} Ref: ${ref}`);
 
   const ref_detailt = octokit.rest.git.getRef({
     ...github.context.repo,
