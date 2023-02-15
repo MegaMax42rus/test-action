@@ -20,7 +20,7 @@ try {
   });
 
   ref_detailt.then(function(result) {
-     console.log(JSON.stringify(ref_detailt, undefined, 2)) // "Some User token"
+     console.log(JSON.stringify(result, undefined, 2)) // "Some User token"
   })
 
 
