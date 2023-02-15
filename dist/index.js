@@ -9788,8 +9788,7 @@ try {
   const branch = github.context.ref.replace(/refs\/heads\//g, '');
   console.log(`Sha: ${sha} Branch: ${branch}`);
 
-  const ref = 'v1.1'
-
+  const ref = 'tags/v1.1'
   const ref_detailt = octokit.rest.git.listMatchingRefs({
     ...github.context.repo,
     ref
