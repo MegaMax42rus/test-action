@@ -9786,9 +9786,15 @@ try {
   const payload = JSON.stringify(github.context, undefined, 2);
   console.log(`github.context: ${payload}`);
 
-  const after = github.context.payload.after;
-  const ref = github.context.payload.ref;
-  console.log(`After: ${after} Ref: ${ref}`);
+  const sha = github.context.sha;
+  const ref = github.context.ref;
+  console.log(`Sha: ${after} Ref: ${ref}`);
+
+  const ref_detailt = octokit.rest.git.getRef({
+    ...github.context.repo,
+    ref,
+  });
+  console.log(JSON.stringify(ref_detailt, undefined, 2))
 
 
 } catch (error) {
