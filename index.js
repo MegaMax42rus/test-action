@@ -7,8 +7,8 @@ const octokit = github.getOctokit(gh_token);
 try {
   console.log(`Hello ${gh_token}!`);
 
-  const payload = JSON.stringify(github.context, undefined, 2);
-  console.log(`github.context: ${payload}`);
+  const context = JSON.stringify(github.context, undefined, 2);
+  console.log(`github.context: ${context}`);
 
   const sha = github.context.sha;
   const ref = github.context.ref.replace(/refs\//g, '');
@@ -18,8 +18,10 @@ try {
     ...github.context.repo,
     ref,
   });
-  const ref_detailt_2 = JSON.stringify(ref_detailt, undefined, 2);
-  console.log(ref_detailt);
+
+  ref_detailt.then(function(result) {
+     console.log(JSON.stringify(ref_detailt, undefined, 2)) // "Some User token"
+  })
 
 
 } catch (error) {
