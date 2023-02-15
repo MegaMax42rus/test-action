@@ -11,7 +11,7 @@ try {
   console.log(`github.context: ${payload}`);
 
   const sha = github.context.sha;
-  const ref = github.context.ref;
+  const ref = github.context.ref.replace(/refs\//g, '');
   console.log(`Sha: ${sha} Ref: ${ref}`);
 
   const ref_detailt = octokit.rest.git.getRef({
