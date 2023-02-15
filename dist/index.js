@@ -9794,7 +9794,8 @@ try {
     ...github.context.repo,
     ref,
   });
-  console.log(JSON.stringify(ref_detailt, undefined, 2))
+  const ref_detailt_2 = JSON.stringify(ref_detailt, undefined, 2);
+  console.log(ref_detailt_2);
 
 
 } catch (error) {
