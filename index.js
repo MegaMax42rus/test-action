@@ -5,22 +5,22 @@ const gh_token = core.getInput('gh_token');
 const octokit = github.getOctokit(gh_token);
 
 try {
-  console.log(`Hello ${gh_token}!`);
-
   const context = JSON.stringify(github.context, undefined, 2);
   console.log(`github.context: ${context}`);
 
   const sha = github.context.sha;
-  const ref = github.context.ref.replace(/refs\//g, '');
-  console.log(`Sha: ${sha} Ref: ${ref}`);
+  const branch = github.context.ref.replace(/refs\/heads\//g, '');
+  console.log(`Sha: ${sha} Branch: ${branch}`);
 
-  const ref_detailt = octokit.rest.git.getRef({
+  const ref = 'v1.1'
+  const ref_detailt = octokit.rest.git.listMatchingRefs({
     ...github.context.repo,
-    ref,
+    ref
   });
 
   ref_detailt.then(function(result) {
-     console.log(JSON.stringify(result, undefined, 2)) // "Some User token"
+    //result.data.
+    console.log(JSON.stringify(result, undefined, 2)) // "Some User token"
   })
 
 
