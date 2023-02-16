@@ -9795,7 +9795,7 @@ async function f() {
     const tags_ref = 'tags/v'
     const tags_detailt = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
-      tags_ref
+      ref: 'tags'
     });
     const tags = tags_detailt.data;
 
