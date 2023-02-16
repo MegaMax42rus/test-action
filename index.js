@@ -9,24 +9,41 @@ async function f() {
     //const context = JSON.stringify(github.context, undefined, 2);
     //console.log(`github.context: ${context}`);
 
+    // Getting SHA and branch name
     const sha = github.context.sha;
     const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
-    // Get refs/tags
+
+
+    // Getting refs/tags
     const tags_detailt = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
       ref: 'tags'
     });
     const tags = tags_detailt.data;
 
+
+
+    // Checking if a tag needs to be added 
+    var need_add_tag = true;
     for (tag in tags) {
       if (tags[tag].object.sha == sha) {
-        console.log(tags[tag])
+        need_add_tag = false;
       }
     }
 
+
+
+    // Getting the value of the last tag
+    if (need_add_tag) {
+      console.log('NEED ADD TAG');
+    }
+
+
+
     //console.log(JSON.stringify(tags, undefined, 2));
+
 
 
   } catch (error) {
