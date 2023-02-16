@@ -40,7 +40,7 @@ async function f() {
       console.log('NEED ADD TAG');
       for (tag in tags) {
         try {
-          let tag_ref = tags[tag].ref.match(/^refs\/tags\/v(.*)/)[1];
+          let tag_ref = tags[tag].ref.match(/^refs\/tags\/v(\d+\.\d+\.\d+)$/)[1];
           console.log(tag_ref);
         } catch (error) {
           continue;
