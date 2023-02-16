@@ -21,9 +21,8 @@ async function f() {
     const tags = tags_detailt.data;
 
     for (tag in tags) {
-      console.log(tags[tag])
       if (tags[tag].object.sha == sha) {
-        console.log('XXXXXXXXXXXXXXXXXxx')
+        console.log(tags[tag])
       }
     }
 
