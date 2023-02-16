@@ -9790,7 +9790,7 @@ async function f() {
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
     // Get refs/tags
-    const tags_ref = 'tags'
+    const tags_ref = 'tags/'
     const tags_detailt = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
       tags_ref
