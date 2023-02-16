@@ -9815,6 +9815,11 @@ async function f() {
     if (need_add_tag) {
       if (branch == 'master' || branch == 'main') {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+)$/;
+        console.log('master/main');
+      }
+      if (branch.search(/release\//) || branch.search(/releases\//)) {
+        tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+-rc\d+)$/;
+        console.log('release/releases');
       }
       console.log('NEED ADD TAG');
       for (tag in tags) {
