@@ -9789,6 +9789,8 @@ async function f() {
     const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
+    console.log(github.context.repo);
+
     // Get refs/tags
     const tags_ref = 'tags/v'
     const tags_detailt = await octokit.rest.git.listMatchingRefs({
