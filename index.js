@@ -1,6 +1,15 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+async function get_tags(octokit) {
+  const tags_ref = 'tags'
+  const tags_detailt = await octokit.rest.git.listMatchingRefs({
+    ...github.context.repo,
+    tags_ref
+  });
+  console.log(tags_detailt);
+}
+
 try {
   const gh_token = core.getInput('gh_token');
   const octokit = github.getOctokit(gh_token);
@@ -13,26 +22,11 @@ try {
   console.log(`Sha: ${sha} Branch: ${branch}`);
 
   // Get refs/tags
-  var tags
-  const tags_ref = 'tags'
-
-  (async () => {
-    const tags_detailt = await octokit.rest.git.listMatchingRefs({
-      ...github.context.repo,
-      tags_ref
-    });
-    tags = result.data;
-    console.log(tags_detailt);
-  })();
-
-
-
+  const tags = get_tags(octokit);
 
   //tags_detailt.then(function(result) {
   //  tags = result.data;
   //})
-
-  
 
   console.log(JSON.stringify(tags, undefined, 2));
 
