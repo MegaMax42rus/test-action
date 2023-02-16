@@ -9817,7 +9817,7 @@ async function f() {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+)$/;
         console.log('master/main');
       }
-      if (branch.search(/release\//) || branch.search(/releases\//)) {
+      if (branch.search(/release\//) >= 0 || branch.search(/releases\//) >= 0) {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+-rc\d+)$/;
         console.log('release/releases');
       }
