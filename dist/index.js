@@ -9815,7 +9815,11 @@ async function f() {
     if (need_add_tag) {
       console.log('NEED ADD TAG');
       for (tag in tags) {
-        let tag_ref = tags[tag].ref.match(/^refs\/tags\/v(.*)/)[1]
+        try {
+          let tag_ref = tags[tag].ref.match(/^refs\/tags\/v(.*)/)[1];
+        } catch (error) {
+          continue;
+        }
         console.log(tag_ref);
       }
     }
