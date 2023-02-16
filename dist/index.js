@@ -9816,8 +9816,10 @@ async function f() {
       console.log('NEED ADD TAG');
       if (branch == 'master' || branch == 'main') {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.)(\d+)$/;
-      } else if (branch.search(/release\//) >= 0 || branch.search(/releases\//) >= 0) {
+        console.log('master/main');
+      } else if (branch.match(/release\/(\d+\.\d+\.\d+)/) > 0 || branch.match(/releases\/(\d+\.\d+\.\d+)/) > 0) {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+-rc)(\d+)$/;
+        console.log('release/releases');
       } else {
         core.setFailed(`No rule for brunch "${branch}"`);
       }
