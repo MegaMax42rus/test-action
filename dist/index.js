@@ -9816,12 +9816,13 @@ async function f() {
       console.log('NEED ADD TAG');
       for (tag in tags) {
         try {
-          let tag_ref = tags[tag].ref.match(/^refs\/tags\/v(\d+\.\d+\.\d+)$/)[1];
-          console.log(tag_ref);
+          var tag_ref = tags[tag].ref.match(/^refs\/tags\/v(\d+\.\d+\.\d+)$/)[1];
         } catch (error) {
           continue;
         }
+        console.log(tag_ref);
       }
+      console.log(tag_ref);
     }
 
 
