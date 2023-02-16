@@ -41,10 +41,10 @@ async function f() {
       for (tag in tags) {
         try {
           let tag_ref = tags[tag].ref.match(/^refs\/tags\/v(.*)/)[1];
+          console.log(tag_ref);
         } catch (error) {
           continue;
         }
-        console.log(tag_ref);
       }
     }
 
