@@ -19,15 +19,13 @@ async function f() {
       ...github.context.repo,
       tags_ref
     });
-    console.log(tags_detailt.data);
-
     const tags = tags_detailt.data;
 
-    //tags_detailt.then(function(result) {
-    //  tags = result.data;
-    //})
+    for (tag in tags) {
+      console.log(tag)
+    }
 
-    console.log(JSON.stringify(tags, undefined, 2));
+    //console.log(JSON.stringify(tags, undefined, 2));
 
 
   } catch (error) {
