@@ -9785,7 +9785,7 @@ try {
   console.log(`github.context: ${context}`);
 
   const sha = github.context.sha;
-  const branch = github.context.ref.match(/^refs\/heads\/(.*)/ig);
+  const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
   console.log(branch);
   console.log(`Sha: ${sha} Branch: ${branch}`);
 
