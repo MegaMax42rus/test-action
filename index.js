@@ -56,7 +56,7 @@ async function f() {
         }
         console.log(tag_ref_a, tag_ref_b);
       }
-      var new_tag = `v${tag_ref_a}${tag_ref_b}`
+      var new_tag = `v${tag_ref_a}${parseInt(tag_ref_b)+1}`
       console.log(new_tag);
     }
 
