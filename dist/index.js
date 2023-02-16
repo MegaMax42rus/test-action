@@ -9785,7 +9785,7 @@ try {
   console.log(`github.context: ${context}`);
 
   const sha = github.context.sha;
-  const branch = github.context.ref.match(/^refs\/heads\/\(.*\)/g, '');
+  const branch = github.context.ref.match(/^refs\/heads\/(.*)/g, '');
   console.log(`Sha: ${sha} Branch: ${branch}`);
 
   const ref = 'tags/v1.1'
@@ -9796,7 +9796,7 @@ try {
 
   ref_detailt.then(function(result) {
     //result.data.
-    console.log(JSON.stringify(result, undefined, 2)) // "Some User token"
+    //console.log(JSON.stringify(result, undefined, 2)) // "Some User token"
   })
 
 
