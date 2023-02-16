@@ -9781,15 +9781,14 @@ try {
   const gh_token = core.getInput('gh_token');
   const octokit = github.getOctokit(gh_token);
 
-  const context = JSON.stringify(github.context, undefined, 2);
-  console.log(`github.context: ${context}`);
+  //const context = JSON.stringify(github.context, undefined, 2);
+  //console.log(`github.context: ${context}`);
 
   const sha = github.context.sha;
   const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
-  console.log(branch);
   console.log(`Sha: ${sha} Branch: ${branch}`);
 
-  const ref = 'tags/v1.1'
+  const ref = 'tags'
   const ref_detailt = octokit.rest.git.listMatchingRefs({
     ...github.context.repo,
     ref
@@ -9797,7 +9796,7 @@ try {
 
   ref_detailt.then(function(result) {
     //result.data.
-    //console.log(JSON.stringify(result, undefined, 2)) // "Some User token"
+    console.log(JSON.stringify(result, undefined, 2)) // "Some User token"
   })
 
 
