@@ -9798,7 +9798,7 @@ async function f() {
     const tags = tags_detailt.data;
 
     for (tag in tags) {
-      console.log(tag)
+      console.log(tags[tag])
     }
 
     //console.log(JSON.stringify(tags, undefined, 2));
