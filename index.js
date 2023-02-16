@@ -37,10 +37,13 @@ async function f() {
 
     // Getting the value of the last tag
     if (need_add_tag) {
+      if (branch == 'master' || branch == 'main') {
+        tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+)$/;
+      }
       console.log('NEED ADD TAG');
       for (tag in tags) {
         try {
-          var tag_ref = tags[tag].ref.match(/^refs\/tags\/v(\d+\.\d+\.\d+)$/)[1];
+          var tag_ref = tags[tag].ref.match(tag_ref_regex)[1];
         } catch (error) {
           continue;
         }
