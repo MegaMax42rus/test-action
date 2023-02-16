@@ -9788,15 +9788,17 @@ try {
   const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
   console.log(`Sha: ${sha} Branch: ${branch}`);
 
-  const ref = 'tags'
-  const ref_detailt = octokit.rest.git.listMatchingRefs({
+  const tags_ref = 'tags'
+  const tags_detailt = octokit.rest.git.listMatchingRefs({
     ...github.context.repo,
-    ref
+    tags_ref
   });
 
-  ref_detailt.then(function(result) {
-    //result.data.
-    console.log(JSON.stringify(result, undefined, 2)) // "Some User token"
+  let tags;
+
+  tags_detailt.then(function(result) {
+    tags = result.data
+    console.log(JSON.stringify(result.data, undefined, 2)) // "Some User token"
   })
 
 
