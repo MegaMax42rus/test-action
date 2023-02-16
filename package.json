@@ -1,7 +1,7 @@
 {
-  "name": "test-action",
+  "name": "autotaging-action",
   "version": "1.0.0",
-  "description": "",
+  "description": "Automatic installation of tags according to Gitflow",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
