@@ -9816,10 +9816,8 @@ async function f() {
       console.log('NEED ADD TAG');
       if (branch == 'master' || branch == 'main') {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.)(\d+)$/;
-        console.log('master/main');
       } else if (branch.search(/release\//) >= 0 || branch.search(/releases\//) >= 0) {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+-rc)(\d+)$/;
-        console.log('release/releases');
       } else {
         core.setFailed(`No rule for brunch "${branch}"`);
       }
@@ -9830,9 +9828,9 @@ async function f() {
         } catch (error) {
           continue;
         }
-        console.log(tag_ref_a, tag_ref_b);
+        console.log(`v${tag_ref_a}${tag_ref_b}`);
       }
-      var new_tag = `v${tag_ref_a}${parseInt(tag_ref_b)+1}`
+      var new_tag = `New tag: v${tag_ref_a}${parseInt(tag_ref_b)+1}`
       console.log(new_tag);
     }
 
