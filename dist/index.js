@@ -9814,6 +9814,10 @@ async function f() {
     // Getting the value of the last tag
     if (need_add_tag) {
       console.log('NEED ADD TAG');
+      for (tag in tags) {
+        let tag_ref = tags[tag].object.ref.match(/^refs\/tags\/(.*)/)[1]
+        console.log(tag_ref);
+      }
     }
 
 
