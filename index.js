@@ -42,7 +42,7 @@ async function f() {
       if (branch == 'master' || branch == 'main') {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.)(\d+)$/;
         console.log('master/main');
-      } else if (branch.match(/^release\/(\d+\.\d+\.\d+)$/) > 0 || branch.match(/^releases\/(\d+\.\d+\.\d+)$/) > 0) {
+      } else if (branch.match(/^release\/(\d+\.\d+\.\d+)$/).length > 0 || branch.match(/^releases\/(\d+\.\d+\.\d+)$/).length > 0) {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+-rc)(\d+)$/;
         console.log('release/releases');
       } else {
