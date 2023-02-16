@@ -9783,7 +9783,7 @@ async function get_tags(octokit) {
     ...github.context.repo,
     tags_ref
   });
-  console.log(tags_detailt);
+  console.log(tags_detailt.data);
 }
 
 try {
@@ -9795,7 +9795,7 @@ try {
 
   const sha = github.context.sha;
   const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
-  console.log(`Sha: ${sha} Branch: ${branch}`);
+  console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
   // Get refs/tags
   const tags = get_tags(octokit);
