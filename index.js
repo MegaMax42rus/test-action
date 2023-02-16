@@ -37,17 +37,21 @@ async function f() {
 
     // Getting the value of the last tag
     if (need_add_tag) {
+      console.log('NEED ADD TAG');
       if (branch == 'master' || branch == 'main') {
-        tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+)$/;
+        tag_ref_regex = /^refs\/tags\/v((\d+\.\d+\.)(\d+))$/;
         console.log('master/main');
       } else if (branch.search(/release\//) >= 0 || branch.search(/releases\//) >= 0) {
-        tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+-rc\d+)$/;
+        tag_ref_regex = /^refs\/tags\/v((\d+\.\d+\.\d+-rc)(\d+))$/;
         console.log('release/releases');
+      } else {
+        core.setFailed(`No rule for brunch "${branch}"`);
       }
-      console.log('NEED ADD TAG');
       for (tag in tags) {
         try {
           var tag_ref = tags[tag].ref.match(tag_ref_regex)[1];
+          console.log(tags[tag].ref.match(tag_ref_regex)[2]);
+          console.log(tags[tag].ref.match(tag_ref_regex)[3]);
         } catch (error) {
           continue;
         }
