@@ -39,25 +39,25 @@ async function f() {
     if (need_add_tag) {
       console.log('NEED ADD TAG');
       if (branch == 'master' || branch == 'main') {
-        tag_ref_regex = /^refs\/tags\/v((\d+\.\d+\.)(\d+))$/;
+        tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.)(\d+)$/;
         console.log('master/main');
       } else if (branch.search(/release\//) >= 0 || branch.search(/releases\//) >= 0) {
-        tag_ref_regex = /^refs\/tags\/v((\d+\.\d+\.\d+-rc)(\d+))$/;
+        tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+-rc)(\d+)$/;
         console.log('release/releases');
       } else {
         core.setFailed(`No rule for brunch "${branch}"`);
       }
       for (tag in tags) {
         try {
-          var tag_ref = tags[tag].ref.match(tag_ref_regex)[1];
-          console.log(tags[tag].ref.match(tag_ref_regex)[2]);
-          console.log(tags[tag].ref.match(tag_ref_regex)[3]);
+          var tag_ref_a = tags[tag].ref.match(tag_ref_regex)[1];
+          var tag_ref_b = tags[tag].ref.match(tag_ref_regex)[2];
         } catch (error) {
           continue;
         }
-        console.log(tag_ref);
+        console.log(tag_ref_a, tag_ref_b);
       }
-      console.log(tag_ref);
+      var new_tag = `v${tag_ref_a}${tag_ref_b}`
+      console.log(new_tag);
     }
 
 
