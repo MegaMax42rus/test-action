@@ -9791,13 +9791,24 @@ try {
   // Get refs/tags
   var tags
   const tags_ref = 'tags'
-  const tags_detailt = octokit.rest.git.listMatchingRefs({
-    ...github.context.repo,
-    tags_ref
-  });
-  tags_detailt.then(function(result) {
+
+  (async () => {
+    const tags_detailt = await octokit.rest.git.listMatchingRefs({
+      ...github.context.repo,
+      tags_ref
+    });
     tags = result.data;
-  })
+    console.log(tags_detailt);
+  })();
+
+
+
+
+  //tags_detailt.then(function(result) {
+  //  tags = result.data;
+  //})
+
+  
 
   console.log(JSON.stringify(tags, undefined, 2));
 
