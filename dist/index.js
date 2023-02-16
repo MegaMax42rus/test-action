@@ -9789,13 +9789,14 @@ try {
   console.log(`Sha: ${sha} Branch: ${branch}`);
 
   // Get refs/tags
+  var tags
   const tags_ref = 'tags'
   const tags_detailt = octokit.rest.git.listMatchingRefs({
     ...github.context.repo,
     tags_ref
   });
   tags_detailt.then(function(result) {
-    var tags = result.data;
+    tags = result.data;
   })
 
   console.log(JSON.stringify(tags, undefined, 2));
