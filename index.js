@@ -14,10 +14,11 @@ async function f() {
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
     // Get refs/tags
-    const tags = await octokit.rest.git.listMatchingRefs({
+    const tags_detailt = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
       ref: 'tags'
-    }).data;
+    });
+    const tags = tags_detailt.data;
 
     for (tag in tags) {
       console.log(tags[tag])
