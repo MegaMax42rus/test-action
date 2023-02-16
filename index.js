@@ -9,8 +9,8 @@ try {
   console.log(`github.context: ${context}`);
 
   const sha = github.context.sha;
-  const branch = github.context.ref.match(/^refs\/heads\/(.*)/g, '')[1];
-  console.log(`Sha: ${sha} Branch: ${branch}`);
+  const branch = github.context.ref.match(/^refs\/heads\/(.*)/g, '');
+  console.log(`Sha: ${sha} Branch: ${branch[1]}`);
 
   const ref = 'tags/v1.1'
   const ref_detailt = octokit.rest.git.listMatchingRefs({
