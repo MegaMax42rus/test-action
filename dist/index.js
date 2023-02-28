@@ -9817,11 +9817,11 @@ async function f() {
       console.log('NEED ADD TAG');
       if (branch == 'master' || branch == 'main') {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.)(\d+)$/;
-        console.log('master/main');
+        console.log('Rule for: master/main');
       } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
 
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+-rc)(\d+)$/;
-        console.log('release/releases');
+        console.log('Rule for: release/releases');
       } else {
         core.setFailed(`No rule for brunch "${branch}"`);
       }
@@ -9829,13 +9829,13 @@ async function f() {
       for (tag in tags) {
         console.log(tags[tag].ref);
         try {
-          var tag_ref_old = tags[tag].ref.match(/^refs\/tags\/v(\d+\.\d+\.\d+)$/)[1];
+          var old_tag = tags[tag].ref.match(/^refs\/tags\/v(\d+\.\d+\.\d+)$/)[1];
         } catch (error) {
           continue;
         }
-        console.log(`v${tag_ref_old}`);
+        console.log(`v${old_tag}`);
       }
-      console.log(`Old tag: v${tag_ref_old}`);
+      console.log(`Old tag: v${old_tag}`);
 
       for (tag in tags) {
         try {
