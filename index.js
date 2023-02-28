@@ -14,41 +14,25 @@ async function f() {
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
     var mode;
-    var tag_series;
+    var release;
     if (branch == 'master' || branch == 'main') {
       mode = 'master/main';
+      console.log(`Rule for: ${mode}`);
     } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
       mode = 'release/releases';
-      tag_series = branch.match(/^releases?\/(\d+\.\d+\.)[\dx]+$/)[1];
-      console.log(`Tag series: ${tag_series}`);
+      release = branch.match(/^releases?\/(\d+\.\d+\.)[\dx]+$/)[1];
+      console.log(`Rule for: ${mode} Release: ${release}x`);
     } else {
       core.setFailed(`No rule for brunch "${branch}"`);
     }
-    console.log(`Rule for: ${mode}`);
-
-
 
     // Getting refs/tags
     const tags_detailt = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
-      ref: `tags/v${tag_series}`
+      ref: `tags/v${release}`
     });
     const tags = tags_detailt.data;
     console.log(`Tags: ${JSON.stringify(tags, undefined, 2)}`);
-
-
-
-    if (mode == 'release/releases') {
-
-
-
-
-
-
-
-    }
-
-
 
     // Checking if no tag
     var need_add_tag = true;
@@ -58,22 +42,9 @@ async function f() {
       }
     }
 
-
-
     // Getting the value of the last tag
     if (need_add_tag) {
       console.log('NEED ADD TAG');
-
-      if (branch == 'master' || branch == 'main') {
-        tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.)(\d+)$/;
-        console.log('Rule for: master/main');
-      } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
-
-        tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+-rc)(\d+)$/;
-        console.log('Rule for: release/releases');
-      } else {
-        core.setFailed(`No rule for brunch "${branch}"`);
-      }
 
       // Getting last clear tag
       for (tag in tags) {
