@@ -9790,27 +9790,34 @@ async function f() {
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
     var mode;
+    var tag_series;
     if (branch == 'master' || branch == 'main') {
       mode = 'master/main';
     } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
       mode = 'release/releases';
+      tag_series = branch.match(/^releases?\/(\d+\.\d+\.)[\dx]+$/)[1];
+      console.log(`Tag series: ${tag_series}`);
     } else {
       core.setFailed(`No rule for brunch "${branch}"`);
     }
     console.log(`Rule for: ${mode}`);
 
 
-    if (mode == 'release/releases') {
-      const old_tag_a = branch.match(/^releases?\/(\d+\.\d+\.)[\dx]+$/)[1];
-      console.log(`Tag series: ${old_tag_a}`);
 
-      // Getting refs/tags
-      const tags_detailt = await octokit.rest.git.listMatchingRefs({
-        ...github.context.repo,
-        ref: `tags/v${old_tag_a}`
-      });
-      const tags = tags_detailt.data;
-      console.log(`Tags: ${JSON.stringify(tags, undefined, 2)}`);
+    // Getting refs/tags
+    const tags_detailt = await octokit.rest.git.listMatchingRefs({
+      ...github.context.repo,
+      ref: `tags/v${tag_series}`
+    });
+    const tags = tags_detailt.data;
+    console.log(`Tags: ${JSON.stringify(tags, undefined, 2)}`);
+
+
+
+    if (mode == 'release/releases') {
+
+
+
 
 
 
