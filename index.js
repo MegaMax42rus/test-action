@@ -39,10 +39,11 @@ async function f() {
     // Getting the value of the last tag
     if (need_add_tag) {
       console.log('NEED ADD TAG');
+      console.log(`${branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/)}`);
       if (branch == 'master' || branch == 'main') {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.)(\d+)$/;
         console.log('master/main');
-      } else if (branch.test(/^releases?\/\d+\.\d+\.[\dx]+$/)) {
+      } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) > 0) {
 
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.\d+-rc)(\d+)$/;
         console.log('release/releases');
