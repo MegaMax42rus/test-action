@@ -9814,7 +9814,8 @@ async function f() {
     // Getting the value of the last tag
     if (need_add_tag) {
       console.log('NEED ADD TAG');
-      if (branch == 'master' || branch == 'main') {
+      if (branch == 'master' ||
+        branch == 'main') {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.)(\d+)$/;
         console.log('master/main');
       } else if (branch.match(/^release\/(\d+\.\d+\.\d+)$/).length > 0 ||
