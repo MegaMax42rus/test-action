@@ -9827,12 +9827,13 @@ async function f() {
       }
 
       for (tag in tags) {
+        console.log(tags[tag].ref);
         try {
           var tag_ref_old = tags[tag].ref.match(/^refs\/tags\/v(\d+\.\d+\.\d+)$/)[1];
         } catch (error) {
           continue;
         }
-        console.log(`v${tag_ref_old}`);
+        console.log(`v${tag}`);
       }
       console.log(`Old tag: v${tag_ref_old}`);
 
