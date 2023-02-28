@@ -9782,23 +9782,39 @@ async function f() {
     const gh_token = core.getInput('gh_token');
     const octokit = github.getOctokit(gh_token);
 
-    const context = JSON.stringify(github.context, undefined, 2);
-    console.log(`github.context: ${context}`);
+    console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
     // Getting SHA and branch name
     const sha = github.context.sha;
     const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
+    if (branch == 'master' || branch == 'main') {
+      const mode = 'master/main';
+    } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
+      const mode = 'release/releases';
+    } else {
+      core.setFailed(`No rule for brunch "${branch}"`);
+    }
+    console.log(`Rule for: ${mode}`);
 
 
-    // Getting refs/tags
-    const tags_detailt = await octokit.rest.git.listMatchingRefs({
-      ...github.context.repo,
-      ref: 'tags'
-    });
-    const tags = tags_detailt.data;
-    console.log(`tags: ${tags}`);
+    if (mode == 'release/releases') {
+      const old_tag_a = branch.match(/^releases?\/(\d+\.\d+\.)[\dx]+$/)[1];
+      console.log(`Tag series: ${old_tag_a}`);
+
+      // Getting refs/tags
+      const tags_detailt = await octokit.rest.git.listMatchingRefs({
+        ...github.context.repo,
+        ref: `tags/v${old_tag_a}`
+      });
+      const tags = tags_detailt.data;
+      console.log(`Tags: ${JSON.stringify(tags, undefined, 2)}`);
+
+
+
+
+    }
 
 
 
@@ -9815,6 +9831,7 @@ async function f() {
     // Getting the value of the last tag
     if (need_add_tag) {
       console.log('NEED ADD TAG');
+
       if (branch == 'master' || branch == 'main') {
         tag_ref_regex = /^refs\/tags\/v(\d+\.\d+\.)(\d+)$/;
         console.log('Rule for: master/main');
@@ -9826,14 +9843,17 @@ async function f() {
         core.setFailed(`No rule for brunch "${branch}"`);
       }
 
+      // Getting last clear tag
       for (tag in tags) {
         console.log(tags[tag].ref);
         try {
-          var old_tag = tags[tag].ref.match(/^refs\/tags\/v(\d+\.\d+\.\d+)$/)[1];
+          var old_tag = tags[tag].ref.match(/^refs\/tags\/v(\d+\.\d+)\.(\d+)$/);
+          var old_tag_a = old_tag[1];
+          var old_tag_b = old_tag[2];
         } catch (error) {
           continue;
         }
-        console.log(`v${old_tag}`);
+        console.log(`v${old_tag_a}.${old_tag_b}`);
       }
       console.log(`Old tag: v${old_tag}`);
 
