@@ -13,10 +13,11 @@ async function f() {
     const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
+    var mode;
     if (branch == 'master' || branch == 'main') {
-      const mode = 'master/main';
+      mode = 'master/main';
     } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
-      const mode = 'release/releases';
+      mode = 'release/releases';
     } else {
       core.setFailed(`No rule for brunch "${branch}"`);
     }
