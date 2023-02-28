@@ -57,7 +57,7 @@ async function f() {
         } catch (error) {
           continue;
         }
-        console.log(`v${tag}`);
+        console.log(`v${tag_ref_old}`);
       }
       console.log(`Old tag: v${tag_ref_old}`);
 
