@@ -9782,8 +9782,8 @@ async function f() {
     const gh_token = core.getInput('gh_token');
     const octokit = github.getOctokit(gh_token);
 
-    //const context = JSON.stringify(github.context, undefined, 2);
-    //console.log(`github.context: ${context}`);
+    const context = JSON.stringify(github.context, undefined, 2);
+    console.log(`github.context: ${context}`);
 
     // Getting SHA and branch name
     const sha = github.context.sha;
