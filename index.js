@@ -120,10 +120,10 @@ function main_mode(all_tags_data, parent_commits, version) {
   console.log('================================================================================');
   console.log(`DEBUG Version: ${version}`);
   if (version) {
-    let max_clear_version_regex = new RegExp(`^${version.replace('.','\\.')}$`);
+    let max_clear_version_regex = new RegExp(`^refs/tags/${version.replace('.','\\.')}$`);
     let max_clear_version = get_max_tag2(all_tags_data, max_clear_version_regex);
     console.log(`Max clear version: ${max_clear_version}`);
-    let max_r_version_regex = new RegExp(`^${version.replace('.','\\.')}-r\\d+$`);
+    let max_r_version_regex = new RegExp(`^refs/tags/${version.replace('.','\\.')}-r\\d+$`);
     let max_r_version = get_max_tag2(all_tags_data, max_r_version_regex);
     console.log(`Max r version: ${max_r_version}`);
     if (version == max_clear_version) {
