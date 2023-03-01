@@ -9782,12 +9782,12 @@ const octokit = github.getOctokit(gh_token);
 
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
-function get_tag_my_sha(all_tags_detailt, sha) {
-  let commint = octokit.rest.git.getCommit({
+async function get_tag_my_sha(all_tags_detailt, sha) {
+  let commit = await octokit.rest.git.getCommit({
     ...github.context.repo,
     commit_sha: sha,
   });
-  console.log(`Commit: ${JSON.stringify(commint, undefined, 2)}`);
+  console.log(`Commit: ${JSON.stringify(commit, undefined, 2)}`);
 }
 
 function get_max_tag(tag_array, regex) {
