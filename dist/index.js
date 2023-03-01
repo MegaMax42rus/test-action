@@ -9794,10 +9794,10 @@ async function get_parent_commit_by_sha(sha) {
   return parent_commits;
 }
 
-function get_tag_by_sha(all_tags_detail, sha) {
-  for (tag in all_tags_detail) {
-    if (all_tags_detail[tag].object.sha == sha) {
-      return all_tags_detail[tag].ref.match(/^refs\/tags\/(.*)/)[1]
+function get_tag_by_sha(all_tags_data, sha) {
+  for (tag in all_tags_data) {
+    if (all_tags_data[tag].object.sha == sha) {
+      return all_tags_data[tag].ref.match(/^refs\/tags\/(.*)/)[1]
     }
   }
 }
@@ -9890,15 +9890,15 @@ function release_mode(all_tags, release, version) {
   }
 }
 
-function main_mode(all_tags_detail, parent_commit, version) {
+function main_mode(all_tags_data, parent_commit, version) {
   console.log('================================================================================');
   console.log(`DEBUG Version: ${version}`);
   if (version) {
     //
   } else {
     for (commit in parent_commit) {
-      console.log(`Sha: ${parent_commit[commit]} Tag: ${get_tag_by_sha(all_tags_detail, parent_commit[commit])}`);
-      let max_rc_version = get_max_tag2(all_tags_detail, /^refs\/tags\/v\d+\.\d+\.\d+-rc\d+$/);
+      console.log(`Sha: ${parent_commit[commit]} Tag: ${get_tag_by_sha(all_tags_data, parent_commit[commit])}`);
+      let max_rc_version = get_tag_by_sha(all_tags_data, parent_commit[commit]);
       console.log(`Max rc version: ${max_rc_version}`);
     }
   }
@@ -9913,15 +9913,15 @@ async function f() {
 
     // Getting all tags and checking if no tag
     var all_tags = [];
-    const all_tags_detail2 = await octokit.rest.git.listMatchingRefs({
+    const all_tags_detail = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
       ref: `tags/`
     });
-    const all_tags_detail = all_tags_detail2.data;
+    const all_tags_data = all_tags_detail.data;
     var need_add_tag = true;
-    for (tag in all_tags_detail2.data) {
-      all_tags.push(all_tags_detail2.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
-      if (all_tags_detail2.data[tag].object.sha == sha) {
+    for (tag in all_tags_data2.data) {
+      all_tags.push(all_tags_data2.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
+      if (all_tags_data2.data[tag].object.sha == sha) {
         need_add_tag = false;
       }
     }
@@ -9931,7 +9931,7 @@ async function f() {
       if (branch == 'master' || branch == 'main') {
         console.log('Rule for: master/main');
         const parent_commit = await get_parent_commit_by_sha(sha);
-        new_tag = main_mode(all_tags_detail, parent_commit, null);
+        new_tag = main_mode(all_tags_data, parent_commit, null);
       } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
         console.log('Rule for: release/releases');
         let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
