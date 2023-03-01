@@ -57,9 +57,10 @@ async function f() {
     if (mode == 'release/releases') {
       console.log('Enter in release/releases mode')
       let max_rc_vercion = get_max_tag(all_tags, /v\d+\.\d+\.\d+-rc\d+$/)
-      console.log(max_rc_vercion)
       if (max_rc_vercion) {
-        console.log('max_rc_vercion is yea')
+        console.log(`Max rc vercion: ${max_rc_vercion}`);
+        let max_clear_vercion = get_max_tag(all_tags, /v\d+\.\d+\.\d+$/)
+        console.log(`Max clear vercion: ${max_clear_vercion}`);
       }
     }
 
