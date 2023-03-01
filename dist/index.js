@@ -9839,6 +9839,7 @@ async function f() {
 
     if (mode == 'release/releases') {
       let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
+      release = '1.2';
       console.log(`Release version: ${release}`);
       let reg1 = new RegExp(`^v${release.replace('.','\\.')}\\.\\d+-rc\\d+$`)
       let max_rc_vercion = get_max_tag(all_tags, reg1);
