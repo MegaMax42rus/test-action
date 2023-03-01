@@ -42,9 +42,11 @@ function get_max_tag(tag_array, regex) {
 }
 
 function get_max_tag2(tag_array_detail, regex) {
+  console.log(regex);
   var max_tag;
   for (tag in tag_array_detail) {
     try {
+      console.log(tag_array_detail[tag].ref);
       max_tag = tag_array_detail[tag].ref.match(regex)[0];
     } catch (error) {
       continue;
