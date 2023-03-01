@@ -9797,7 +9797,7 @@ async function f() {
     });
 
     for (tag in all_tags_detailt.data) {
-      all_tags.push(all_tags_detailt.data[tag].object.sha)
+      all_tags.push(all_tags_detailt.data[tag].ref)
     }
     console.log(`All tags: ${all_tags}`);
 
