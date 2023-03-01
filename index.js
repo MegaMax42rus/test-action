@@ -39,6 +39,7 @@ function increment_rc(version) {
 }
 
 function release_mode(all_tags, release, version) {
+  console.log('================================================================================');
   console.log(`DEBUG Version: ${version}`);
   if (version) {
     let max_clear_version_regex = new RegExp(`^${version.replace('.','\\.')}$`);
