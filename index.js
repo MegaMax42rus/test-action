@@ -134,12 +134,13 @@ async function f() {
       }
     }
 
+    console.log(`GET TAG: ${get_tag_my_sha(all_tags_detailt, sha)}`);
+
     if (need_add_tag) {
       console.log('NEED to add tag');
       if (branch == 'master' || branch == 'main') {
         console.log('Rule for: master/main');
-        //new_tag = main_mode(all_tags, null);
-        console.log(`GET TAG: ${get_tag_my_sha(all_tags_detailt, sha)}`);
+        new_tag = main_mode(all_tags, null);
       } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
         console.log('Rule for: release/releases');
         let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
