@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const debug = true;
 
-console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
+//console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
 function get_max_tag(tag_array, regex) {
   console.log(tag_array);
@@ -36,11 +36,10 @@ async function f() {
       ref: `tags/`
     });
     for (tag in all_tags_detailt.data) {
-      all_tags.push(all_tags_detailt.data[tag].ref);
+      all_tags.push(all_tags_detailt.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
       if (debug) {
-        let tag_ref = all_tags_detailt.data[tag].ref.match(/^refs\/tags\/(.*)/)[1];
         let tag_sha = all_tags_detailt.data[tag].object.sha;
-        console.log(`${tag_ref} (${tag_sha})`);
+        console.log(`${all_tags[tag]} (${tag_sha})`);
       }
     }
 
