@@ -11,7 +11,7 @@ async function get_tag_my_sha(all_tags_detailt, sha) {
     ...github.context.repo,
     commit_sha: sha,
   });
-  console.log(`Commit: ${JSON.stringify(commit, undefined, 2)}`);
+  console.log(`Commit: ${JSON.stringify(commit.data, undefined, 2)}`);
 }
 
 function get_max_tag(tag_array, regex) {
