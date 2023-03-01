@@ -9924,11 +9924,11 @@ async function f() {
         core.setFailed(`No rule for brunch "${branch}"`);
       }
       console.log(`New tag: ${new_tag}`)
-      octokit.rest.git.createRef({
-        ...github.context.repo,
-        ref: `refs/tags/${new_tag}`,
-        sha: sha
-      });
+      //octokit.rest.git.createRef({
+      //  ...github.context.repo,
+      //  ref: `refs/tags/${new_tag}`,
+      //  sha: sha
+      //});
     } else {
       console.log('NO need to adding tag');
     }
