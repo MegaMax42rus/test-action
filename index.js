@@ -41,6 +41,18 @@ function get_max_tag(tag_array, regex) {
   return max_tag;
 }
 
+function get_max_tag2(tag_array_detail, regex) {
+  var max_tag;
+  for (tag in tag_array_detail.data) {
+    try {
+      max_tag = tag_array_detail.data[tag].ref.match(regex)[0];
+    } catch (error) {
+      continue;
+    }
+  }
+  return max_tag;
+}
+
 function get_max_tag_match(tag_array, regex) {
   //console.log(regex);
   var max_tag;
@@ -102,26 +114,18 @@ function release_mode(all_tags, release, version) {
   }
 }
 
-function main_mode(all_tags, version) {
+function main_mode(all_tags_detail, parent_commit, version) {
   console.log('================================================================================');
   console.log(`DEBUG Version: ${version}`);
   if (version) {
-    let max_clear_version_regex = new RegExp(`^${version.replace('.','\\.')}$`);
-    let max_clear_version = get_max_tag(all_tags, max_clear_version_regex);
-    console.log(`Max clear version: ${max_clear_version}`);
-    let max_r_version_regex = new RegExp(`^${version.replace('.','\\.')}-r\\d+$`);
-    let max_r_version = get_max_tag(all_tags, max_rc_version_regex);
-    console.log(`Max rc version: ${max_rc_version}`);
-
+    //
   } else {
-    //let max_version_regex = new RegExp(`^(v${release.replace('.','\\.')}\\.\\d+).*$`);
-    //let max_version = get_max_tag_match(all_tags, max_version_regex);
-    //console.log(`Max version: ${max_version}`);
-    //if (max_version) {
-    //  return main_mode(all_tags, max_version);
-    //} else {
-    //  return `v.0`;
-    //}
+
+    for (commit in parent_commit) {
+      console.log(`Sha: ${parent_commit[commit]} Tag: ${get_tag_by_sha(all_tags_detail, parent_commit[commit])}`);
+      let max_rc_version = get_max_tag2(all_tags_detail, /^v\d+\.\d+\.\d+-rc\d+$/);
+      console.log(`Max rc version: ${max_rc_version}`);
+    }
   }
 }
 
@@ -146,20 +150,12 @@ async function f() {
       }
     }
 
-
-
     if (need_add_tag) {
       console.log('NEED to add tag');
       if (branch == 'master' || branch == 'main') {
         console.log('Rule for: master/main');
         const parent_commit = await get_parent_commit_by_sha(sha);
-        for (commit in parent_commit) {
-          console.log(`Sha: ${parent_commit[commit]}`);
-          console.log(`Tag: ${get_tag_by_sha(all_tags_detail, parent_commit[commit])}`);
-        }
-
-
-        new_tag = main_mode(all_tags, null);
+        new_tag = main_mode(all_tags_detail, parent_commit, null);
       } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
         console.log('Rule for: release/releases');
         let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
