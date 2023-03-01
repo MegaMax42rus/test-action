@@ -9924,7 +9924,7 @@ function main_mode(all_tags_data, parent_commits, version) {
       }
       //return main_mode(all_tags_data, parent_commits, increment_r(max_clear_version));
     } else {
-      return 'xxxx';
+      return version;
     }
   } else {
     for (commit in parent_commits) {
