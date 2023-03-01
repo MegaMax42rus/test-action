@@ -9776,7 +9776,6 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(2810);
 const github = __nccwpck_require__(4176);
-//const debug = true;
 
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
@@ -9817,6 +9816,11 @@ function increment_patch(version) {
 
 function increment_rc(version) {
   let split_version = version.match(/v?(\d+\.\d+\.\d+-rc)(\d+)$/);
+  return `${split_version[1]}${parseInt(split_version[2])+1}`;
+}
+
+function increment_r(version) {
+  let split_version = version.match(/v?(\d+\.\d+\.\d+-r)(\d+)$/);
   return `${split_version[1]}${parseInt(split_version[2])+1}`;
 }
 
@@ -9861,33 +9865,34 @@ async function f() {
     const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
-    // Getting all tags
+    // Getting all tags and checking if no tag
     var all_tags = [];
     const all_tags_detailt = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
       ref: `tags/`
     });
+    var need_add_tag = true;
     for (tag in all_tags_detailt.data) {
       all_tags.push(all_tags_detailt.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
-      //if (debug) {
-      //  let tag_sha = all_tags_detailt.data[tag].object.sha;
-      //  console.log(`${all_tags[tag]} (${tag_sha})`);
-      //}
+      if (all_tags_detailt.data[tag].object.sha == sha) {
+        need_add_tag = false;
+      }
     }
 
-    // Select mode
-    var mode;
-    if (branch == 'master' || branch == 'main') {
-      console.log('Rule for: master/main');
-    } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
-      console.log('Rule for: release/releases');
-      let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
-      //release = '1.2';
-      console.log(`Release version: ${release}`);
-      new_tag = release_mode(all_tags, release, null);
-      console.log(`New tag: ${new_tag}`)
-    } else {
-      core.setFailed(`No rule for brunch "${branch}"`);
+    if (need_add_tag) {
+      console.log('NEED ADD TAG');
+      if (branch == 'master' || branch == 'main') {
+        console.log('Rule for: master/main');
+      } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
+        console.log('Rule for: release/releases');
+        let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
+        //release = '1.2';
+        console.log(`Release version: ${release}`);
+        new_tag = release_mode(all_tags, release, null);
+        console.log(`New tag: ${new_tag}`)
+      } else {
+        core.setFailed(`No rule for brunch "${branch}"`);
+      }
     }
   } catch (error) {
     core.setFailed(error.message);
