@@ -20,9 +20,8 @@ async function f() {
       ref: `tags/v`
     });
 
-    for (tag in all_tags_detailt) {
-      console.log(all_tags_detailt[tag].object.sha)
-      all_tags.push(all_tags_detailt[tag].object.sha)
+    for (tag in all_tags_detailt.data) {
+      all_tags.push(all_tags_detailt.data[tag].object.sha)
     }
     console.log(`All tags: ${all_tags}`);
 
