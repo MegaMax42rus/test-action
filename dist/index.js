@@ -9899,6 +9899,8 @@ function main_mode(all_tags_data, parent_commits, version) {
     console.log(`Max clear version: ${max_clear_version}`);
     if (version == max_clear_version) {
       return main_mode(all_tags_data, parent_commits, increment_patch(max_clear_version));
+    } else {
+      //return version;
     }
   } else {
     for (commit in parent_commits) {
@@ -9909,6 +9911,7 @@ function main_mode(all_tags_data, parent_commits, version) {
         return main_mode(all_tags_data, parent_commits, commit_tag.match(/(v?\d+\.\d+\.\d+)-rc\d+$/)[1]);
       }
     }
+    return main_mode(all_tags_data, parent_commits, commit_tag.match(/(v?\d+\.\d+\.\d+)$/)[1]);
   }
 }
 
