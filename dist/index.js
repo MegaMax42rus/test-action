@@ -9797,13 +9797,10 @@ async function f() {
     });
     for (tag in all_tags_detailt.data) {
       all_tags.push(all_tags_detailt.data[tag].ref);
-      console.log(`${all_tags_detailt.data[tag].ref} \
-        (${all_tags_detailt.data[tag].object.sha})`);
+      let tag_ref = all_tags_detailt.data[tag].ref;
+      let tag_sha = all_tags_detailt.data[tag].object.sha;
+      console.log(`${tag_ref} (${tag_sha})`);
     }
-
-
-
-
 
 
 
