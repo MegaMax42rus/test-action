@@ -9840,7 +9840,7 @@ async function f() {
         let max_clear_vercion = get_max_tag(all_tags, /v\d+\.\d+\.\d+$/);
         if (max_clear_vercion) {
           console.log(`Max clear vercion: ${max_clear_vercion}`);
-          if (max_rc_vercion.match(/v(\d+\.\d+\.\d+)-rc\d+$/)[1] == max_clear_vercion) {
+          if (max_rc_vercion.match(/(v\d+\.\d+\.\d+)-rc\d+$/)[1] == max_clear_vercion) {
             new_tag = `${increment_patch(max_clear_vercion)}-rc0`
             console.log('increment path +rc0')
             console.log(`New tag: ${new_tag}`)
