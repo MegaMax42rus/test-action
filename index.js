@@ -143,7 +143,8 @@ async function f() {
       }
     }
 
-    console.log(get_parent_commit_by_sha(sha));
+    const parent_commit = await get_parent_commit_by_sha(sha);
+    console.log(parent_commit);
     console.log(get_tag_by_sha(all_tags_detailt, sha));
 
     if (need_add_tag) {
