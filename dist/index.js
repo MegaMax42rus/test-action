@@ -9782,7 +9782,7 @@ const octokit = github.getOctokit(gh_token);
 
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
-async function get_parent_commit_by_sha(sha) {
+async function get_parent_commits_by_sha(sha) {
   let commit_detail = await octokit.rest.git.getCommit({
     ...github.context.repo,
     commit_sha: sha,
@@ -9890,15 +9890,15 @@ function release_mode(all_tags, release, version) {
   }
 }
 
-function main_mode(all_tags_data, parent_commit, version) {
+function main_mode(all_tags_data, parent_commits, version) {
   console.log('================================================================================');
   console.log(`DEBUG Version: ${version}`);
   if (version) {
     //
   } else {
-    for (commit in parent_commit) {
-      console.log(`Sha: ${parent_commit[commit]} Tag: ${get_tag_by_sha(all_tags_data, parent_commit[commit])}`);
-      let max_rc_version = get_tag_by_sha(all_tags_data, parent_commit[commit]);
+    for (commit in parent_commits) {
+      console.log(`Sha: ${parent_commits[commit]} Tag: ${get_tag_by_sha(all_tags_data, parent_commits[commit])}`);
+      let max_rc_version = get_tag_by_sha(all_tags_data, parent_commits[commit]);
       console.log(`Max rc version: ${max_rc_version}`);
     }
   }
@@ -9930,8 +9930,8 @@ async function f() {
       console.log('NEED to add tag');
       if (branch == 'master' || branch == 'main') {
         console.log('Rule for: master/main');
-        const parent_commit = await get_parent_commit_by_sha(sha);
-        new_tag = main_mode(all_tags_data, parent_commit, null);
+        const parent_commits = await get_parent_commits_by_sha(sha);
+        new_tag = main_mode(all_tags_data, parent_commits, null);
       } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
         console.log('Rule for: release/releases');
         let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
