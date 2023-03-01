@@ -146,15 +146,19 @@ async function f() {
       }
     }
 
-    const parent_commit = await get_parent_commit_by_sha(sha);
-    console.log(`Parent commit: ${parent_commit}`);
-    console.log(`Parent commit: ${JSON.stringify(parent_commit, undefined, 2)}`);
-    console.log(`Tag by sha: ${get_tag_by_sha(all_tags_detail, sha)}`);
+
 
     if (need_add_tag) {
       console.log('NEED to add tag');
       if (branch == 'master' || branch == 'main') {
         console.log('Rule for: master/main');
+        const parent_commit = await get_parent_commit_by_sha(sha);
+        for (commit in parent_commit) {
+          console.log(`Sha: ${parent_commits[commit]}`);
+          console.log(`Tag: ${get_tag_by_sha(all_tags_detail, parent_commits[commit])}`);
+        }
+
+
         new_tag = main_mode(all_tags, null);
       } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
         console.log('Rule for: release/releases');
