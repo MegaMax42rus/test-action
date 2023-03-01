@@ -100,7 +100,7 @@ async function f() {
     } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
       console.log('Rule for: release/releases');
       let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
-      release = '1.2';
+      //release = '1.2';
       console.log(`Release version: ${release}`);
       new_tag = release_mode(all_tags, release, null);
       console.log(`New tag: ${new_tag}`)
