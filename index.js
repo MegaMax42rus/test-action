@@ -39,14 +39,23 @@ function increment_rc(version) {
 }
 
 function release_mode(all_tags, release, version) {
+  console.log(`DEBUG Version: ${version}`);
   if (version) {
-    let max_clear_version_regex = new RegExp(`^v${release.replace('.','\\.')}\\.\\d+$`);
+    let max_clear_version_regex = new RegExp(`^${version.replace('.','\\.')}$`);
     let max_clear_version = get_max_tag(all_tags, max_clear_version_regex);
     console.log(`Max clear version: ${max_clear_version}`);
-
-    let max_rc_version_regex = new RegExp(`^v${release.replace('.','\\.')}\\.\\d+-rc\\d+$`);
+    let max_rc_version_regex = new RegExp(`^${version.replace('.','\\.')}-rc\\d+$`);
     let max_rc_version = get_max_tag(all_tags, max_rc_version_regex);
     console.log(`Max rc version: ${max_rc_version}`);
+    if (version == max_clear_version) {
+      return release_mode(all_tags, release, increment_patch(max_clear_version));
+    } else {
+      if (max_rc_version) {
+        return increment_rc(max_rc_version);
+      } else {
+        return `${version}-rc0`
+      }
+    }
   } else {
     let max_version_regex = new RegExp(`^(v${release.replace('.','\\.')}\\.\\d+)\\.*$`);
     let max_version = get_max_tag_match(all_tags, max_version_regex);
@@ -56,7 +65,6 @@ function release_mode(all_tags, release, version) {
     } else {
       return `v${release}.0-rc0`;
     }
-
   }
 }
 
