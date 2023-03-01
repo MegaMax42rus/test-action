@@ -121,9 +121,9 @@ function main_mode(all_tags_data, parent_commits, version) {
     //
   } else {
     for (commit in parent_commits) {
-      console.log(`Sha: ${parent_commits[commit]} Tag: ${get_tag_by_sha(all_tags_data, parent_commits[commit])}`);
-      let max_rc_version = get_tag_by_sha(all_tags_data, parent_commits[commit]);
-      console.log(`Max rc version: ${max_rc_version}`);
+      let commit_sha = parent_commits[commit];
+      let commit_tag = get_tag_by_sha(all_tags_data, commit_sha);
+      console.log(`Sha: ${commit_sha} Tag: ${commit_tag}`);
     }
   }
 }
