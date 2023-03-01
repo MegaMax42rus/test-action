@@ -23,8 +23,8 @@ async function f() {
     for (tag in all_tags_detailt.data) {
       all_tags.push(all_tags_detailt.data[tag].ref)
     }
-    for (tag in all_tags_detailt.data) {
-      console.log(tag);
+    for (tag in all_tags) {
+      console.log(all_tags[tag]);
     }
 
 
