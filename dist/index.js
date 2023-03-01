@@ -9787,7 +9787,7 @@ function get_max_tag(tag_array, regex) {
   for (tag in tag_array) {
     try {
       console.log(tag_array[tag]);
-      max_tag = tags[tag].ref.match(regex);
+      max_tag = tag_array[tag].ref.match(regex);
     } catch (error) {
       continue;
     }
