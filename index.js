@@ -41,6 +41,21 @@ function get_max_tag(tag_array, regex) {
   return max_tag;
 }
 
+function get_max_tag_match(tag_array, regex) {
+  //console.log(regex);
+  var max_tag;
+  for (tag in tag_array) {
+    try {
+      //console.log(tag_array[tag]);
+      max_tag = tag_array[tag].match(regex)[1];
+    } catch (error) {
+      //console.log(`ERROR: ${error}\n${tag_array[tag]}`);
+      continue;
+    }
+  }
+  return max_tag;
+}
+
 function get_max_tag2(tag_array_detail, regex) {
   //console.log(regex);
   var max_tag;
@@ -55,15 +70,14 @@ function get_max_tag2(tag_array_detail, regex) {
   return max_tag;
 }
 
-function get_max_tag_match(tag_array, regex) {
+function get_max_tag_match2(tag_array_detail, regex) {
   //console.log(regex);
   var max_tag;
-  for (tag in tag_array) {
+  for (tag in tag_array_detail) {
     try {
-      //console.log(tag_array[tag]);
-      max_tag = tag_array[tag].match(regex)[1];
+      //console.log(tag_array_detail[tag].ref);
+      max_tag = tag_array_detail[tag].ref.match(regex)[1];
     } catch (error) {
-      //console.log(`ERROR: ${error}\n${tag_array[tag]}`);
       continue;
     }
   }
@@ -120,11 +134,11 @@ function main_mode(all_tags_data, parent_commits, version) {
   console.log('================================================================================');
   console.log(`DEBUG Version: ${version}`);
   if (version) {
-    let max_clear_version_regex = new RegExp(`^refs/tags/${version.replace('.','\\.')}$`);
-    let max_clear_version = get_max_tag2(all_tags_data, max_clear_version_regex);
+    let max_clear_version_regex = new RegExp(`^refs/tags/(${version.replace('.','\\.')})$`);
+    let max_clear_version = get_max_tag_match2(all_tags_data, max_clear_version_regex);
     console.log(`Max clear version: ${max_clear_version}`);
-    let max_r_version_regex = new RegExp(`^refs/tags/${version.replace('.','\\.')}-r\\d+$`);
-    let max_r_version = get_max_tag2(all_tags_data, max_r_version_regex);
+    let max_r_version_regex = new RegExp(`^refs/tags/(${version.replace('.','\\.')}-r\\d+)$`);
+    let max_r_version = get_max_tag_match2(all_tags_data, max_r_version_regex);
     console.log(`Max r version: ${max_r_version}`);
     if (version == max_clear_version) {
       return main_mode(all_tags_data, parent_commits, increment_r(max_clear_version));
