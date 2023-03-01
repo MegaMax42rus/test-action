@@ -9777,12 +9777,8 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2810);
 const github = __nccwpck_require__(4176);
 
-try {
-  const gh_token = core.getInput('gh_token');
-  const octokit = github.getOctokit(gh_token);
-} catch (error) {
-  core.setFailed(error.message);
-}
+const gh_token = core.getInput('gh_token');
+const octokit = github.getOctokit(gh_token);
 
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
