@@ -146,7 +146,6 @@ function main_mode(all_tags_data, parent_commits, version) {
       } else {
         return `${version}-r2`
       }
-      //return main_mode(all_tags_data, parent_commits, increment_r(max_clear_version));
     } else {
       return version;
     }
@@ -156,9 +155,9 @@ function main_mode(all_tags_data, parent_commits, version) {
         let commit_sha = parent_commits[commit];
         let commit_tag = get_tag_by_sha(all_tags_data, commit_sha);
         console.log(`Sha: ${commit_sha} Tag: ${commit_tag}`);
-        if (commit_tag.search(/v?\d+\.\d+\.\d+-arc\d+$/) >= 0) {
+        if (commit_tag.search(/v?\d+\.\d+\.\d+-rc\d+$/) >= 0) {
           console.log('rc');
-          return main_mode(all_tags_data, parent_commits, commit_tag.match(/(v?\d+\.\d+\.\d+)-arc\d+$/)[1]);
+          return main_mode(all_tags_data, parent_commits, commit_tag.match(/(v?\d+\.\d+\.\d+)-rc\d+$/)[1]);
         }
       } catch (error) {
         continue;
@@ -178,7 +177,6 @@ function main_mode(all_tags_data, parent_commits, version) {
       }
     }
     core.setFailed('No reper tags in master/main brunch');
-    //return main_mode(all_tags_data, parent_commits, commit_tag.match(/(v?\d+\.\d+\.\d+)$/)[1]);
   }
 }
 
