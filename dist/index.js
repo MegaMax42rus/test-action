@@ -9781,14 +9781,14 @@ const github = __nccwpck_require__(4176);
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
 function get_max_tag(tag_array, regex) {
-  console.log(regex);
+  //console.log(regex);
   var max_tag;
   for (tag in tag_array) {
     try {
-      console.log(tag_array[tag]);
+      //console.log(tag_array[tag]);
       max_tag = tag_array[tag].match(regex)[0];
     } catch (error) {
-      console.log(`ERROR: ${error}\n${tag_array[tag]}`);
+      //console.log(`ERROR: ${error}\n${tag_array[tag]}`);
       continue;
     }
   }
@@ -9796,14 +9796,14 @@ function get_max_tag(tag_array, regex) {
 }
 
 function get_max_tag_match(tag_array, regex) {
-  console.log(regex);
+  //console.log(regex);
   var max_tag;
   for (tag in tag_array) {
     try {
-      console.log(tag_array[tag]);
+      //console.log(tag_array[tag]);
       max_tag = tag_array[tag].match(regex)[1];
     } catch (error) {
-      console.log(`ERROR: ${error}\n${tag_array[tag]}`);
+      //console.log(`ERROR: ${error}\n${tag_array[tag]}`);
       continue;
     }
   }
