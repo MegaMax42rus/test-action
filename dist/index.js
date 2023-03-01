@@ -9791,12 +9791,12 @@ async function get_parent_commit_by_sha(sha) {
   console.log(`Commit: ${JSON.stringify(parent_commits, undefined, 2)}`);
 }
 
-async function get_tag_by_sha(all_tags_detailt, sha) {
-  let commit = await octokit.rest.git.getCommit({
-    ...github.context.repo,
-    commit_sha: sha,
-  });
-  console.log(`Commit: ${JSON.stringify(commit.data, undefined, 2)}`);
+function get_tag_by_sha(all_tags_detailt, sha) {
+  for (tag in all_tags_detailt.data) {
+    if (all_tags_detailt.data[tag].object.sha == sha) {
+      return all_tags_detailt.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]
+    }
+  }
 }
 
 function get_max_tag(tag_array, regex) {
@@ -9920,6 +9920,7 @@ async function f() {
     }
 
     console.log(get_parent_commit_by_sha(sha));
+    console.log(get_tag_by_sha(all_tags_detailt, sha));
 
     if (need_add_tag) {
       console.log('NEED to add tag');
