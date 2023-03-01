@@ -9839,10 +9839,11 @@ async function f() {
 
     if (mode == 'release/releases') {
       let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
-      let max_rc_vercion = get_max_tag(all_tags, /v${release}\.\d+-rc\d+$/);
+      let reg1 = new RegExp(`v${release}\.\d+-rc\d+$`)
+      let max_rc_vercion = get_max_tag(all_tags, reg1);
       if (max_rc_vercion) {
         console.log(`Max rc vercion: ${max_rc_vercion}`);
-        let max_clear_vercion = get_max_tag(all_tags, /v${release}\.\d+$/);
+        let max_clear_vercion = get_max_tag(all_tags, /v\d+\.\d+\.\d+$/);
         if (max_clear_vercion) {
           console.log(`Max clear vercion: ${max_clear_vercion}`);
           if (max_rc_vercion.match(/(v\d+\.\d+\.\d+)-rc\d+$/)[1] == max_clear_vercion) {
