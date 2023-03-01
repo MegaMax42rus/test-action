@@ -9795,9 +9795,9 @@ async function get_parent_commit_by_sha(sha) {
 }
 
 function get_tag_by_sha(all_tags_detail, sha) {
-  for (tag in all_tags_detail.data) {
-    if (all_tags_detail.data[tag].object.sha == sha) {
-      return all_tags_detail.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]
+  for (tag in all_tags_detail) {
+    if (all_tags_detail[tag].object.sha == sha) {
+      return all_tags_detail[tag].ref.match(/^refs\/tags\/(.*)/)[1]
     }
   }
 }
@@ -9819,10 +9819,9 @@ function get_max_tag(tag_array, regex) {
 
 function get_max_tag2(tag_array_detail, regex) {
   var max_tag;
-  for (tag in tag_array_detail.data) {
+  for (tag in tag_array_detail) {
     try {
-      //console.log(tag_array_detail.data[tag].ref);
-      max_tag = tag_array_detail.data[tag].ref.match(regex)[0];
+      max_tag = tag_array_detail[tag].ref.match(regex)[0];
     } catch (error) {
       continue;
     }
@@ -9914,14 +9913,15 @@ async function f() {
 
     // Getting all tags and checking if no tag
     var all_tags = [];
-    const all_tags_detail = await octokit.rest.git.listMatchingRefs({
+    const all_tags_detail2 = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
       ref: `tags/`
     });
+    const all_tags_detail = all_tags_detail2.data;
     var need_add_tag = true;
-    for (tag in all_tags_detail.data) {
-      all_tags.push(all_tags_detail.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
-      if (all_tags_detail.data[tag].object.sha == sha) {
+    for (tag in all_tags_detail2.data) {
+      all_tags.push(all_tags_detail2.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
+      if (all_tags_detail2.data[tag].object.sha == sha) {
         need_add_tag = false;
       }
     }
