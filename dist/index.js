@@ -9912,12 +9912,12 @@ async function f() {
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
     // Getting all tags and checking if no tag
-    var all_tags = [];
     const all_tags_detail = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
       ref: `tags/`
     });
     const all_tags_data = all_tags_detail.data;
+    var all_tags = [];
     var need_add_tag = true;
     for (tag in all_tags_data) {
       all_tags.push(all_tags_data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
