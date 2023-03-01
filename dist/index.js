@@ -9919,9 +9919,9 @@ async function f() {
     });
     const all_tags_data = all_tags_detail.data;
     var need_add_tag = true;
-    for (tag in all_tags_data2.data) {
-      all_tags.push(all_tags_data2.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
-      if (all_tags_data2.data[tag].object.sha == sha) {
+    for (tag in all_tags_data) {
+      all_tags.push(all_tags_data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
+      if (all_tags_data[tag].object.sha == sha) {
         need_add_tag = false;
       }
     }
