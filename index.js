@@ -104,7 +104,7 @@ async function f() {
     }
 
     if (need_add_tag) {
-      console.log('NEED ADD TAG');
+      console.log('NEED to add tag');
       if (branch == 'master' || branch == 'main') {
         console.log('Rule for: master/main');
       } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
@@ -117,6 +117,8 @@ async function f() {
       } else {
         core.setFailed(`No rule for brunch "${branch}"`);
       }
+    } else {
+      console.log('NO need to adding tag');
     }
   } catch (error) {
     core.setFailed(error.message);
