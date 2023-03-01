@@ -9783,19 +9783,21 @@ const octokit = github.getOctokit(gh_token);
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
 async function get_parent_commit_by_sha(sha) {
-  let commit = await octokit.rest.git.getCommit({
+  let commit_detail = await octokit.rest.git.getCommit({
     ...github.context.repo,
     commit_sha: sha,
   });
-  let parent_commits = commit.data.parents;
-  console.log(`Commit: ${JSON.stringify(parent_commits, undefined, 2)}`);
-  return commit.data.parents;
+  let parent_commits = [];
+  for (commit in commit_detail.data.parents) {
+    parent_commits.push(commit_detail.data.parents[commit]);
+  }
+  return parent_commits;
 }
 
-function get_tag_by_sha(all_tags_detailt, sha) {
-  for (tag in all_tags_detailt.data) {
-    if (all_tags_detailt.data[tag].object.sha == sha) {
-      return all_tags_detailt.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]
+function get_tag_by_sha(all_tags_detail, sha) {
+  for (tag in all_tags_detail.data) {
+    if (all_tags_detail.data[tag].object.sha == sha) {
+      return all_tags_detail.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]
     }
   }
 }
@@ -9908,21 +9910,21 @@ async function f() {
 
     // Getting all tags and checking if no tag
     var all_tags = [];
-    const all_tags_detailt = await octokit.rest.git.listMatchingRefs({
+    const all_tags_detail = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
       ref: `tags/`
     });
     var need_add_tag = true;
-    for (tag in all_tags_detailt.data) {
-      all_tags.push(all_tags_detailt.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
-      if (all_tags_detailt.data[tag].object.sha == sha) {
+    for (tag in all_tags_detail.data) {
+      all_tags.push(all_tags_detail.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
+      if (all_tags_detail.data[tag].object.sha == sha) {
         need_add_tag = false;
       }
     }
 
     const parent_commit = await get_parent_commit_by_sha(sha);
     console.log(`Parent commit: ${parent_commit}`);
-    console.log(`Tag by sha: ${get_tag_by_sha(all_tags_detailt, sha)}`);
+    console.log(`Tag by sha: ${get_tag_by_sha(all_tags_detail, sha)}`);
 
     if (need_add_tag) {
       console.log('NEED to add tag');
