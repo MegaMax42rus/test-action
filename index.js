@@ -17,7 +17,7 @@ async function f() {
     var all_tags = [];
     const all_tags_detailt = await octokit.rest.git.listMatchingRefs({
       ...github.context.repo,
-      ref: `tags/v`
+      ref: `tags/`
     });
 
     for (tag in all_tags_detailt.data) {
