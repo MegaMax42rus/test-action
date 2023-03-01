@@ -9797,8 +9797,9 @@ async function f() {
     });
 
     for (tag in all_tags_detailt.data) {
-      all_tags.push(all_tags_detailt.data[tag].ref)
+      all_tags.push(all_tags_detailt.data[tag].ref);
     }
+    all_tags.sort();
     for (tag in all_tags) {
       console.log(all_tags[tag]);
     }
