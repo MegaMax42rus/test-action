@@ -9777,6 +9777,13 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2810);
 const github = __nccwpck_require__(4176);
 
+try {
+  const gh_token = core.getInput('gh_token');
+  const octokit = github.getOctokit(gh_token);
+} catch (error) {
+  core.setFailed(error.message);
+}
+
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
 function get_tag_my_sha(all_tags_detailt, sha) {
@@ -9888,9 +9895,6 @@ function main_mode(all_tags, version) {
 
 async function f() {
   try {
-    const gh_token = core.getInput('gh_token');
-    const octokit = github.getOctokit(gh_token);
-
     // Getting SHA and branch name
     const sha = github.context.sha;
     const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
