@@ -118,7 +118,12 @@ function main_mode(all_tags_data, parent_commits, version) {
   console.log('================================================================================');
   console.log(`DEBUG Version: ${version}`);
   if (version) {
-    //
+    let max_clear_version_regex = new RegExp(`^${version.replace('.','\\.')}$`);
+    let max_clear_version = get_max_tag2(all_tags_data, max_clear_version_regex);
+    console.log(`Max clear version: ${max_clear_version}`);
+    if (version == max_clear_version) {
+      return main_mode(all_tags_data, parent_commits, increment_patch(max_clear_version));
+    }
   } else {
     for (commit in parent_commits) {
       let commit_sha = parent_commits[commit];
@@ -126,7 +131,6 @@ function main_mode(all_tags_data, parent_commits, version) {
       console.log(`Sha: ${commit_sha} Tag: ${commit_tag}`);
       if (commit_tag.search(/v?\d+\.\d+\.\d+-rc\d+$/) >= 0) {
         return main_mode(all_tags_data, parent_commits, commit_tag.match(/(v?\d+\.\d+\.\d+)-rc\d+$/)[1]);
-         
       }
     }
   }
