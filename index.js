@@ -6,7 +6,16 @@ const octokit = github.getOctokit(gh_token);
 
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
-async function get_tag_my_sha(all_tags_detailt, sha) {
+async function get_parent_commit_by_sha(sha) {
+  let commit = await octokit.rest.git.getCommit({
+    ...github.context.repo,
+    commit_sha: sha,
+  });
+  let parent_commits = commit.data.parents;
+  console.log(`Commit: ${JSON.stringify(parent_commits, undefined, 2)}`);
+}
+
+async function get_tag_by_sha(all_tags_detailt, sha) {
   let commit = await octokit.rest.git.getCommit({
     ...github.context.repo,
     commit_sha: sha,
@@ -134,7 +143,7 @@ async function f() {
       }
     }
 
-    console.log(`GET TAG: ${get_tag_my_sha(all_tags_detailt, sha)}`);
+    console.log(get_parent_commit_by_sha(sha));
 
     if (need_add_tag) {
       console.log('NEED to add tag');
