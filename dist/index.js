@@ -9789,6 +9789,7 @@ async function get_parent_commit_by_sha(sha) {
   });
   let parent_commits = commit.data.parents;
   console.log(`Commit: ${JSON.stringify(parent_commits, undefined, 2)}`);
+  return commit.data.parents;
 }
 
 function get_tag_by_sha(all_tags_detailt, sha) {
