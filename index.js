@@ -1,12 +1,12 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
+
 async function f() {
   try {
     const gh_token = core.getInput('gh_token');
     const octokit = github.getOctokit(gh_token);
-
-    console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
     // Getting SHA and branch name
     const sha = github.context.sha;
@@ -19,10 +19,10 @@ async function f() {
       ...github.context.repo,
       ref: `tags/`
     });
-
     for (tag in all_tags_detailt.data) {
       all_tags.push(all_tags_detailt.data[tag].ref);
-      console.log(all_tags[tag]);
+      console.log(`${all_tags_detailt.data[tag].ref} \
+        (${all_tags_detailt.data[tag].object.sha})`);
     }
 
 
