@@ -21,6 +21,11 @@ function increment_patch(version) {
   return `${split_version[1]}${parseInt(split_version[2])+1}`;
 }
 
+function increment_rc(version) {
+  let split_version = version.match(/v?(\d+\.\d+\.\d+-rc)(\d+)$/);
+  return `${split_version[1]}${parseInt(split_version[2])+1}`;
+}
+
 async function f() {
   try {
     const gh_token = core.getInput('gh_token');
@@ -69,10 +74,14 @@ async function f() {
             console.log('increment path +rc0')
             console.log(`New tag: ${new_tag}`)
           } else {
+            new_tag = increment_rc(max_rc_vercion)
             console.log('increment rc')
+            console.log(`New tag: ${new_tag}`)
           }
         } else {
+          new_tag = increment_rc(max_rc_vercion)
           console.log('increment rc')
+          console.log(`New tag: ${new_tag}`)
         }
 
       } else {
