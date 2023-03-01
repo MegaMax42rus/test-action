@@ -40,12 +40,6 @@ function increment_rc(version) {
 
 function release_mode(all_tags, release, version) {
   if (version) {
-    //
-  } else {
-    let max_version_regex = new RegExp(`^(v${release.replace('.','\\.')}\\.\\d+)\\.*$`);
-    let max_version = get_max_tag_match(all_tags, max_version_regex);
-    console.log(`Max version: ${max_version}`);
-
     let max_clear_version_regex = new RegExp(`^v${release.replace('.','\\.')}\\.\\d+$`);
     let max_clear_version = get_max_tag(all_tags, max_clear_version_regex);
     console.log(`Max clear version: ${max_clear_version}`);
@@ -53,6 +47,11 @@ function release_mode(all_tags, release, version) {
     let max_rc_version_regex = new RegExp(`^v${release.replace('.','\\.')}\\.\\d+-rc\\d+$`);
     let max_rc_version = get_max_tag(all_tags, max_rc_version_regex);
     console.log(`Max rc version: ${max_rc_version}`);
+  } else {
+    let max_version_regex = new RegExp(`^(v${release.replace('.','\\.')}\\.\\d+)\\.*$`);
+    let max_version = get_max_tag_match(all_tags, max_version_regex);
+    console.log(`Max version: ${max_version}`);
+    release_mode(all_tags, release, max_version)
   }
 }
 
