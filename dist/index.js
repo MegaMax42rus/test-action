@@ -9821,6 +9821,7 @@ function get_max_tag2(tag_array_detail, regex) {
   var max_tag;
   for (tag in tag_array_detail.data) {
     try {
+      console.log(tag_array_detail.data[tag].ref);
       max_tag = tag_array_detail.data[tag].ref.match(regex)[0];
     } catch (error) {
       continue;
@@ -9896,7 +9897,6 @@ function main_mode(all_tags_detail, parent_commit, version) {
   if (version) {
     //
   } else {
-
     for (commit in parent_commit) {
       console.log(`Sha: ${parent_commit[commit]} Tag: ${get_tag_by_sha(all_tags_detail, parent_commit[commit])}`);
       let max_rc_version = get_max_tag2(all_tags_detail, /^v\d+\.\d+\.\d+-rc\d+$/);
