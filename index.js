@@ -56,20 +56,6 @@ function get_max_tag_match(tag_array, regex) {
   return max_tag;
 }
 
-function get_max_tag2(tag_array_detail, regex) {
-  //console.log(regex);
-  var max_tag;
-  for (tag in tag_array_detail) {
-    try {
-      //console.log(tag_array_detail[tag].ref);
-      max_tag = tag_array_detail[tag].ref.match(regex)[0];
-    } catch (error) {
-      continue;
-    }
-  }
-  return max_tag;
-}
-
 function get_max_tag_match2(tag_array_detail, regex) {
   //console.log(regex);
   var max_tag;
@@ -156,7 +142,6 @@ function main_mode(all_tags_data, parent_commits, version) {
         let commit_tag = get_tag_by_sha(all_tags_data, commit_sha);
         console.log(`Sha: ${commit_sha} Tag: ${commit_tag}`);
         if (commit_tag.search(/v?\d+\.\d+\.\d+-rc\d+$/) >= 0) {
-          console.log('rc');
           return main_mode(all_tags_data, parent_commits, commit_tag.match(/(v?\d+\.\d+\.\d+)-rc\d+$/)[1]);
         }
       } catch (error) {
@@ -169,7 +154,6 @@ function main_mode(all_tags_data, parent_commits, version) {
         let commit_tag = get_tag_by_sha(all_tags_data, commit_sha);
         console.log(`Sha: ${commit_sha} Tag: ${commit_tag}`);
         if (commit_tag.search(/v?\d+\.\d+\.\d+(-r\d+)?$/) >= 0) {
-          console.log('r');
           return main_mode(all_tags_data, parent_commits, commit_tag.match(/(v?\d+\.\d+\.\d+)(-r\d+)?$/)[1]);
         }
       } catch (error) {
