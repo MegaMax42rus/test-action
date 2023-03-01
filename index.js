@@ -3,6 +3,14 @@ const github = require('@actions/github');
 
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
+function get_tag_my_sha(all_tags_detailt, sha) {
+  let commint = octokit.rest.git.getCommit({
+    ...github.context.repo,
+    commit_sha: sha,
+  });
+  console.log(`Commit: ${JSON.stringify(commint, undefined, 2)}`);
+}
+
 function get_max_tag(tag_array, regex) {
   //console.log(regex);
   var max_tag;
@@ -130,7 +138,8 @@ async function f() {
       console.log('NEED to add tag');
       if (branch == 'master' || branch == 'main') {
         console.log('Rule for: master/main');
-        new_tag = main_mode(all_tags, null);
+        //new_tag = main_mode(all_tags, null);
+        console.log(`GET TAG: ${get_tag_my_sha(all_tags_detailt, sha)}`);
       } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
         console.log('Rule for: release/releases');
         let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
