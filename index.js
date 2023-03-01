@@ -4,6 +4,18 @@ const debug = true;
 
 console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
+function get_max_tag(tag_array, regex) {
+  var max_tag;
+  for (tag in tag_array) {
+    try {
+      max_tag = tags[tag].ref.match(regex);
+    } catch (error) {
+      continue;
+    }
+  }
+  return max_tag
+}
+
 async function f() {
   try {
     const gh_token = core.getInput('gh_token');
@@ -31,9 +43,6 @@ async function f() {
 
 
 
-
-
-
     var mode;
     var release;
     if (branch == 'master' || branch == 'main') {
@@ -47,56 +56,17 @@ async function f() {
       core.setFailed(`No rule for brunch "${branch}"`);
     }
 
-    // Getting refs/tags
-    const tags_detailt = await octokit.rest.git.listMatchingRefs({
-      ...github.context.repo,
-      ref: `tags/v${release}`
-    });
-    const tags = tags_detailt.data;
-    console.log(`Tags: ${JSON.stringify(tags, undefined, 2)}`);
-
-    // Checking if no tag
-    var need_add_tag = true;
-    for (tag in tags) {
-      if (tags[tag].object.sha == sha) {
-        need_add_tag = false;
+    if (mode == 'release/releases') {
+      let max_rc_vercion = get_max_tag(tags, /\d+\.\d+\.\d+-rc\d+$/)
+      if (max_rc_vercion) {
+        console.log('max_rc_vercion is yea')
       }
     }
 
-    // Getting the value of the last tag
-    if (need_add_tag) {
-      console.log('NEED ADD TAG');
-
-      // Getting last clear tag
-      for (tag in tags) {
-        console.log(tags[tag].ref);
-        try {
-          var old_tag = tags[tag].ref.match(/^refs\/tags\/v(\d+\.\d+)\.(\d+)$/);
-          var old_tag_a = old_tag[1];
-          var old_tag_b = old_tag[2];
-        } catch (error) {
-          continue;
-        }
-        console.log(`v${old_tag_a}.${old_tag_b}`);
-      }
-      console.log(`Old tag: v${old_tag}`);
-
-      for (tag in tags) {
-        try {
-          var tag_ref_a = tags[tag].ref.match(tag_ref_regex)[1];
-          var tag_ref_b = tags[tag].ref.match(tag_ref_regex)[2];
-        } catch (error) {
-          continue;
-        }
-        console.log(`v${tag_ref_a}${tag_ref_b}`);
-      }
-      var new_tag = `New tag: v${tag_ref_a}${parseInt(tag_ref_b)+1}`
-      console.log(new_tag);
-    }
 
 
 
-    //console.log(JSON.stringify(tags, undefined, 2));
+
 
 
 
