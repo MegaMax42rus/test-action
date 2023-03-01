@@ -124,6 +124,10 @@ function main_mode(all_tags_data, parent_commits, version) {
       let commit_sha = parent_commits[commit];
       let commit_tag = get_tag_by_sha(all_tags_data, commit_sha);
       console.log(`Sha: ${commit_sha} Tag: ${commit_tag}`);
+      if (commit_tag.search(/v?\d+\.\d+\.\d+-rc\d+$/) >= 0) {
+        console.log('OLOLO')
+        break;
+      }
     }
   }
 }
