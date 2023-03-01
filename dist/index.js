@@ -9817,8 +9817,7 @@ async function f() {
       }
     }
 
-
-
+    // Select mode
     var mode;
     var release;
     if (branch == 'master' || branch == 'main') {
@@ -9833,7 +9832,7 @@ async function f() {
     }
 
     if (mode == 'release/releases') {
-      let max_rc_vercion = get_max_tag(tags, /\d+\.\d+\.\d+-rc\d+$/)
+      let max_rc_vercion = get_max_tag(all_tags, /\d+\.\d+\.\d+-rc\d+$/)
       if (max_rc_vercion) {
         console.log('max_rc_vercion is yea')
       }
