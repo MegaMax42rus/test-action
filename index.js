@@ -11,6 +11,7 @@ function get_max_tag(tag_array, regex) {
       console.log(tag_array[tag]);
       max_tag = tag_array[tag].match(regex)[0];
     } catch (error) {
+      console.log(`ERROR: ${error}\n${tag_array[tag]}`);
       continue;
     }
   }
@@ -24,6 +25,7 @@ function get_max_tag_match(tag_array, regex) {
       console.log(tag_array[tag]);
       max_tag = tag_array[tag].match(regex)[1];
     } catch (error) {
+      console.log(`ERROR: ${error}\n${tag_array[tag]}`);
       continue;
     }
   }
