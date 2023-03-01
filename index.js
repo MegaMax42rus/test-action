@@ -38,7 +38,7 @@ function increment_rc(version) {
   return `${split_version[1]}${parseInt(split_version[2])+1}`;
 }
 
-function release_mode(release, version) {
+function release_mode(all_tags, release, version) {
   if (version) {
     //
   } else {
@@ -89,7 +89,7 @@ async function f() {
       let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
       release = '1.2';
       console.log(`Release version: ${release}`);
-      new_tag = release_mode(release, null);
+      new_tag = release_mode(all_tags, release, null);
       console.log(`New tag: ${new_tag}`)
     } else {
       core.setFailed(`No rule for brunch "${branch}"`);
