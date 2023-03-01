@@ -63,25 +63,26 @@ async function f() {
 
     if (mode == 'release/releases') {
       let release = branch.match(/^releases?\/(\d+\.\d+)\.[\dx]+$/)[1];
+      release = '1.2';
       console.log(`Release version: ${release}`);
-      let max_rc_vercion_regex = new RegExp(`^v${release.replace('.','\\.')}\\.\\d+-rc\\d+$`)
+      let max_rc_vercion_regex = new RegExp(`^v${release.replace('.','\\.')}\\.\\d+-rc\\d+$`);
       let max_rc_vercion = get_max_tag(all_tags, max_rc_vercion_regex);
       if (max_rc_vercion) {
         console.log(`Max rc version: ${max_rc_vercion}`);
-        let max_clear_vercion_regex = new RegExp(`^v${release.replace('.','\\.')}\\.\\d+$`)
+        let max_clear_vercion_regex = new RegExp(`^v${release.replace('.','\\.')}\\.\\d+$`);
         let max_clear_vercion = get_max_tag(all_tags, max_clear_vercion_regex);
         if (max_clear_vercion) {
           console.log(`Max clear version: ${max_clear_vercion}`);
           if (max_rc_vercion.match(/(v\d+\.\d+\.\d+)-rc\d+$/)[1] == max_clear_vercion) {
-            new_tag = `${increment_patch(max_clear_vercion)}-rc0`
+            new_tag = `${increment_patch(max_clear_vercion)}-rc0`;
           } else {
-            new_tag = increment_rc(max_rc_vercion)
+            new_tag = increment_rc(max_rc_vercion);
           }
         } else {
-          new_tag = increment_rc(max_rc_vercion)
+          new_tag = increment_rc(max_rc_vercion);
         }
       } else {
-        new_tag = `v${release}.0-rc0`
+        new_tag = `v${release}.0-rc0`;
       }
       console.log(`New tag: ${new_tag}`)
     }
