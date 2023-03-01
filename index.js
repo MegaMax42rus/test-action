@@ -51,7 +51,12 @@ function release_mode(all_tags, release, version) {
     let max_version_regex = new RegExp(`^(v${release.replace('.','\\.')}\\.\\d+)\\.*$`);
     let max_version = get_max_tag_match(all_tags, max_version_regex);
     console.log(`Max version: ${max_version}`);
-    return release_mode(all_tags, release, max_version)
+    if (max_version) {
+      return release_mode(all_tags, release, max_version);
+    } else {
+      return `v${release}.0-rc0`;
+    }
+
   }
 }
 
