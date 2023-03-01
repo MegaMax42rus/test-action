@@ -9920,8 +9920,8 @@ async function f() {
     }
 
     const parent_commit = await get_parent_commit_by_sha(sha);
-    console.log(parent_commit);
-    console.log(get_tag_by_sha(all_tags_detailt, sha));
+    console.log(`Parent commit: ${parent_commit}`);
+    console.log(`Tag by sha: ${get_tag_by_sha(all_tags_detailt, sha)}`);
 
     if (need_add_tag) {
       console.log('NEED to add tag');
