@@ -5,13 +5,10 @@ const debug = true;
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
 function get_max_tag(tag_array, regex) {
-  console.log(tag_array);
-  console.log(regex);
   var max_tag;
   for (tag in tag_array) {
     try {
-      console.log(tag_array[tag]);
-      max_tag = tag_array[tag].match(regex);
+      max_tag = tag_array[tag].match(regex)[0];
     } catch (error) {
       continue;
     }
