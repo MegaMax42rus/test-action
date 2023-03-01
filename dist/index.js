@@ -9930,8 +9930,8 @@ async function f() {
         console.log('Rule for: master/main');
         const parent_commit = await get_parent_commit_by_sha(sha);
         for (commit in parent_commit) {
-          console.log(`Sha: ${parent_commits[commit]}`);
-          console.log(`Tag: ${get_tag_by_sha(all_tags_detail, parent_commits[commit])}`);
+          console.log(`Sha: ${parent_commit[commit]}`);
+          console.log(`Tag: ${get_tag_by_sha(all_tags_detail, parent_commit[commit])}`);
         }
 
 
