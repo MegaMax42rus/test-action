@@ -9789,6 +9789,23 @@ async function f() {
     const branch = github.context.ref.match(/^refs\/heads\/(.*)/)[1];
     console.log(`Sha: ${sha}\nBranch: ${branch}`);
 
+    // Getting all tags
+    var all_tags = [];
+    const all_tags_detailt = await octokit.rest.git.listMatchingRefs({
+      ...github.context.repo,
+      ref: `tags/v`
+    });
+
+    for (tag in all_tags_detailt) {
+      all_tags.push(all_tags_detailt[tag].object.sha)
+    }
+    console.log(`All tags: ${all_tags}`);
+
+
+
+
+
+
     var mode;
     var release;
     if (branch == 'master' || branch == 'main') {
@@ -9797,7 +9814,7 @@ async function f() {
     } else if (branch.search(/^releases?\/\d+\.\d+\.[\dx]+$/) >= 0) {
       mode = 'release/releases';
       release = branch.match(/^releases?\/(\d+\.\d+\.)[\dx]+$/)[1];
-      console.log(`Rule for: ${mode} Release: ${release}x`);
+      console.log(`Rule for: ${mode}\nRelease: ${release}x`);
     } else {
       core.setFailed(`No rule for brunch "${branch}"`);
     }
