@@ -5,6 +5,7 @@ const github = require('@actions/github');
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
 function get_max_tag(tag_array, regex) {
+  console.log(regex);
   var max_tag;
   for (tag in tag_array) {
     try {
@@ -19,6 +20,7 @@ function get_max_tag(tag_array, regex) {
 }
 
 function get_max_tag_match(tag_array, regex) {
+  console.log(regex);
   var max_tag;
   for (tag in tag_array) {
     try {
