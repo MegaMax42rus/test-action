@@ -13,7 +13,7 @@ async function get_parent_commit_by_sha(sha) {
   });
   let parent_commits = [];
   for (commit in commit_detail.data.parents) {
-    parent_commits.push(commit_detail.data.parents[commit]);
+    parent_commits.push(commit_detail.data.parents[commit].sha);
   }
   return parent_commits;
 }
@@ -147,6 +147,7 @@ async function f() {
     }
 
     const parent_commit = await get_parent_commit_by_sha(sha);
+    console.log(`Parent commit: ${parent_commit}`);
     console.log(`Parent commit: ${JSON.stringify(parent_commit, undefined, 2)}`);
     console.log(`Tag by sha: ${get_tag_by_sha(all_tags_detail, sha)}`);
 
