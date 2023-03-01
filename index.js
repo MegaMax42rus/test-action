@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const debug = true;
+//const debug = true;
 
 //console.log(`github.context: ${JSON.stringify(github.context, undefined, 2)}`);
 
