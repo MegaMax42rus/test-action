@@ -9890,7 +9890,7 @@ async function f() {
         console.log(`Release version: ${release}`);
         new_tag = release_mode(all_tags, release, null);
         console.log(`New tag: ${new_tag}`)
-        octokit.rest.git.createRef({
+        await octokit.rest.git.createRef({
           ...github.context.repo,
           ref: `refs/tags/${new_tag}`,
           sha: sha
