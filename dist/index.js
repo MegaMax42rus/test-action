@@ -9917,13 +9917,14 @@ function main_mode(all_tags_data, parent_commits, version) {
     let max_r_version = get_max_tag_match2(all_tags_data, max_r_version_regex);
     console.log(`Max r version: ${max_r_version}`);
     if (version == max_clear_version) {
-      return main_mode(all_tags_data, parent_commits, increment_r(max_clear_version));
-    } else {
       if (max_r_version) {
         return increment_r(max_r_version);
       } else {
         return `${version}-r2`
       }
+      //return main_mode(all_tags_data, parent_commits, increment_r(max_clear_version));
+    } else {
+      return 'xxxx';
     }
   } else {
     for (commit in parent_commits) {
