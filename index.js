@@ -73,10 +73,10 @@ async function f() {
     });
     for (tag in all_tags_detailt.data) {
       all_tags.push(all_tags_detailt.data[tag].ref.match(/^refs\/tags\/(.*)/)[1]);
-      if (debug) {
-        let tag_sha = all_tags_detailt.data[tag].object.sha;
-        console.log(`${all_tags[tag]} (${tag_sha})`);
-      }
+      //if (debug) {
+      //  let tag_sha = all_tags_detailt.data[tag].object.sha;
+      //  console.log(`${all_tags[tag]} (${tag_sha})`);
+      //}
     }
 
     // Select mode
